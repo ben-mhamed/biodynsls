@@ -1,0 +1,90 @@
+---
+title: "Biodynsls"
+author: "Abdelouahed Ben Mhamed"
+date: "7 avril 2016"
+output: pdf_document
+---
+# Mediterrannée
+```{r}
+rm(list = ls())
+dat <- read.csv2(file = "/home/ben-mhamed/INRH/Working Groups/Crevette/data_Med.csv",sep=",")
+dat <- transform(dat,log_CPUE=log(cpue))
+data <- as.list(dat)[-2]
+data$n <- nrow(dat)
+params <- c("AobsErr","AprocErr","r","K","q","b","B","AACPUE_pred")
+l <- biodynsls(data = data,params = params,type = "A")
+plotIndex(l =l ,data = data)
+plotDiag(l = l,data = data)
+refPoints(l = l,data = data)
+
+l <- biodynsls(data = data,params = params,type = "Std")
+plotIndex(l =l ,data = data)
+plotDiag(l = l,data = data)
+refPoints(l = l,data = data)
+
+l <- biodynsls(data = data,params = params,type = "SR")
+plotIndex(l =l ,data = data)
+plotDiag(l = l,data = data)
+refPoints(l = l,data = data)
+```
+
+# Atlantique
+```{r}
+rm(list = ls())
+data <- read.csv2(file = "/home/ben-mhamed/INRH/Working Groups/Crevette/data_Atl.csv",sep=",")
+dat <- transform(dat,log_CPUE1=log(cpue1),log_CPUE2=log(cpue2),log_CPUE3=log(cpue3))
+data <- as.list(dat)[c(-2,-4,-6)]
+data$n <- 15
+params <- c("AobsErr","AprocErr","r","K","q","b","B","AACPUE_pred")
+l <- biodynsls2(data = data,params = params,type = "A")
+l <- fit(data = data,params = params,type = "A",n.index = 3,n.adapt = 20000,n.iter = 100000,thin = 20)
+plotIndex3(l = l,data = data)
+plotDiag(l = l,data = data)
+refPoints3(l = l,data = data)
+
+l <- biodynsls2(data = data,params = params,type = "Std")
+plotIndex2(l = l,data = data)
+plotDiag(l = l,data = data)
+refPoints2(l = l,data = data)
+```
+
+# Atlantique avec indice d'Hauturier seul
+
+```{r}
+rm(list = ls())
+dat <- read.csv2(file = "/home/ben-mhamed/INRH/Working Groups/Crevette/data_Atl (indice Hauturier).csv",sep=",")
+dat <- transform(dat,log_CPUE=log(cpue))
+data <- as.list(dat)[-2]
+data$n <- nrow(dat)
+params <- c("AobsErr","AprocErr","r","K","q","b","B","AACPUE_pred")
+l <- biodynsls(data = data,params = params,type = "A",n.adapt = 20000,n.iter = 100000,thin = 20)
+plotIndex1(l =l ,data = data)
+plotDiag(l = l,data = data)
+refPoints1(l = l,data = data)
+
+l <- biodynsls(data = data,params = params,type = "Std",n.adapt = 20000,n.iter = 100000,thin = 20)
+plotIndex(l =l ,data = data)
+plotDiag(l = l,data = data)
+refPoints(l = l,data = data)
+
+l <- biodynsls(data = data,params = params,type = "SR")
+plotIndex(l =l ,data = data)
+plotDiag(l = l,data = data)
+refPoints(l = l,data = data)
+```
+
+# Atlantique Last one
+```{r}
+rm(list = ls())
+data <- read.csv2(file = "/home/ben-mhamed/INRH/Working Groups/Crevette/data_Atl.csv",sep=",")
+params <- c("AobsErr","AprocErr","r","K","q","b","B","AACPUE_pred")
+l <- fit(data = data,params = params,type = "Std",n.index = 1,n.adapt = 20000,n.iter = 100000,thin = 20)
+plotIndex(l = l,data = data)
+plotDiag(l = l,data = data)
+refPoints(l = l,data = data)
+
+l <- biodynsls2(data = data,params = params,type = "Std")
+plotIndex2(l = l,data = data)
+plotDiag(l = l,data = data)
+refPoints2(l = l,data = data)
+```

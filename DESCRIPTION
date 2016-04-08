@@ -1,0 +1,15 @@
+Package: biodynsls
+Type: Package
+Title: Biomass dynamic model for short-lived species
+Version: 0.1.0
+Author: Abdelouahed Ben Mhamed
+Maintainer: Abdelouahed Ben Mhamed <a.benmhamed@mail.com>
+Description: This package implements the modified version of the
+    biomass dynamic model adapted for short-lived species
+License: What license is it under?
+Imports:
+    ggplot2,
+    rjags,
+    DAAG
+LazyData: TRUE
+RoxygenNote: 5.0.1
